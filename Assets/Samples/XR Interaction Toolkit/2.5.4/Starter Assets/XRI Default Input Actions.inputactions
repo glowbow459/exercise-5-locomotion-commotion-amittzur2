@@ -1485,7 +1485,7 @@
                 {
                     "name": "",
                     "id": "45e01769-fd0a-43cc-8ca6-eb22482bc402",
-                    "path": "<XRController>{RightHand}/{Primary2DAxisClick}",
+                    "path": "<Mouse>/scroll",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1521,7 +1521,7 @@
                     "name": "Activate",
                     "type": "Button",
                     "id": "41976d89-60de-4deb-bff9-16b4af96b290",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1813,7 +1813,7 @@
                     "name": "Teleport Mode Cancel",
                     "type": "Button",
                     "id": "d587b60c-39a0-4365-8075-477ce484ba0f",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1915,7 +1915,7 @@
                     "path": "<XRController>{RightHand}/{Primary2DAxis}",
                     "interactions": "",
                     "processors": "StickDeadzone",
-                    "groups": "Continuous Move",
+                    "groups": "Generic XR Controller",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -1946,7 +1946,7 @@
                     "name": "",
                     "id": "31d838df-4d4e-4c16-a373-b9c07d9d2e2a",
                     "path": "<XRController>{RightHand}/{Primary2DAxis}",
-                    "interactions": "Sector(directions=12,sweepBehavior=1),Sector(directions=2,sweepBehavior=2)",
+                    "interactions": "Sector(directions=3,sweepBehavior=1)",
                     "processors": "",
                     "groups": "Generic XR Controller",
                     "action": "Snap Turn",
