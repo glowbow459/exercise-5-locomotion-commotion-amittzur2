@@ -13,12 +13,12 @@ public class FollowRightHandScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         if (controller != null && rightHand != null)
         {
             rightHand.position = controller.transform.position;
-            rightHand.rotation = controller.transform.rotation;
+
         }
     }
 
