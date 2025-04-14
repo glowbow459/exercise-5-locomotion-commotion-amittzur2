@@ -11,6 +11,8 @@ public class JoystickKAdjuster : MonoBehaviour
     public float speed = 0.1f; // Sensitivity of adjustment
     public float retractSpeed = 2f; // Speed of retraction
     private bool isRetracting = false;
+    private float retractTime = 0f; // Track how long we've been retracting
+    public float growthRate = 2f;
 
     void Update()
     {
@@ -22,10 +24,16 @@ public class JoystickKAdjuster : MonoBehaviour
 
         if (isRetracting)
         {
-            // Move k toward 0
-            controller.k = Mathf.MoveTowards(controller.k, 0f, retractSpeed * Time.deltaTime);
-            if(controller.k == 0){
+            retractTime += Time.deltaTime;
+
+            // Exponential speed increase: base * e^(rate * time)
+            float exponentialSpeed = retractSpeed * Mathf.Exp(retractTime * growthRate); // 2f = growth rate, tweak it!
+
+            controller.k = Mathf.MoveTowards(controller.k, 0f, exponentialSpeed * Time.deltaTime);
+            if (controller.k == 0f)
+            {
                 isRetracting = false;
+                retractTime = 0f; // Reset timer
             }
         }
         else
