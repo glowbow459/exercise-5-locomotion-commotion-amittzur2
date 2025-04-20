@@ -1615,6 +1615,9 @@ MonoBehaviour:
   spawnPoint: {fileID: 1110061412}
   realHand: {fileID: 138426065}
   handLifetime: 10
+  xrRig: {fileID: 3441311799179621143}
+  followSpeed: 26.67
+  mainBody: {fileID: 1185336504}
 --- !u!1001 &1753998894
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2133,8 +2136,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0.00000011920929, y: 0.86565053, z: -0.020778902}
-    m_Extent: {x: 1.4461333, y: 0.93498385, z: 0.267693}
+    m_Center: {x: -0.2736383, y: -0.020431422, z: -0.010891125}
+    m_Extent: {x: 0.11782721, y: 0.12405447, z: 0.27758074}
   m_DirtyAABB: 0
 --- !u!4 &971806689873649751
 Transform:
@@ -2644,6 +2647,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1743409659229903948, guid: bcc5e8347942bb84f926638e325187e8, type: 3}
+      propertyPath: m_ModelPrefab
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1767842585503853766, guid: bcc5e8347942bb84f926638e325187e8, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -2732,9 +2739,17 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.1440817
       objectReference: {fileID: 0}
+    - target: {fileID: 5085111312536250957, guid: bcc5e8347942bb84f926638e325187e8, type: 3}
+      propertyPath: m_ModelPrefab
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5955182088319365657, guid: bcc5e8347942bb84f926638e325187e8, type: 3}
       propertyPath: m_Name
       value: HandsXrIneraactionSetup
+      objectReference: {fileID: 0}
+    - target: {fileID: 7124827442871864713, guid: bcc5e8347942bb84f926638e325187e8, type: 3}
+      propertyPath: m_Constraints
+      value: 126
       objectReference: {fileID: 0}
     - target: {fileID: 7379115938794254715, guid: bcc5e8347942bb84f926638e325187e8, type: 3}
       propertyPath: m_Enabled

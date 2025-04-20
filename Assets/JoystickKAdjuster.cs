@@ -53,7 +53,7 @@ public class JoystickKAdjuster : MonoBehaviour
         Vector3 origin = offset.position;
         Vector3 direction = (handTransform.position - origin).normalized;
         Debug.DrawRay(origin, direction * Vector3.Distance(origin, handTransform.position), Color.red);
-        Debug.Log("spot origin: " + origin);
+        //Debug.Log("spot origin: " + origin);
         // Raycast from controller to hand
         if (Physics.Raycast(origin, direction, out RaycastHit hit, Vector3.Distance(origin, handTransform.position)))
         {
