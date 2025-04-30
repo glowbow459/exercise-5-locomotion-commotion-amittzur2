@@ -264,6 +264,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &749811790
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 749811791}
+  m_Layer: 0
+  m_Name: CameraMount
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &749811791
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749811790}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0, z: -9.3132246e-10, w: 1}
+  m_LocalPosition: {x: -0.293, y: 0.0506, z: -0.0485}
+  m_LocalScale: {x: 0.13019875, y: 0.13019878, z: 0.13019875}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3521383577187963670}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1080546676
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9177,6 +9208,7 @@ Transform:
   m_Children:
   - {fileID: 2395860087958407827}
   - {fileID: 6658605113423255837}
+  - {fileID: 749811791}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3529149036963594759
@@ -12393,13 +12425,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5630174203204371346}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5358696, y: -0.72134936, z: 0.26163864, w: -0.35219908}
+  m_LocalRotation: {x: 0.69405043, y: 0.5707845, z: 0.33887047, w: 0.27868605}
   m_LocalPosition: {x: 1.1101085, y: 1.3938102, z: -0.01849378}
   m_LocalScale: {x: 0.0247586, y: 0.024758598, z: 0.0247586}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8522676944597692907}
-  m_LocalEulerAnglesHint: {x: -180, y: -52.048004, z: -253.215}
+  m_LocalEulerAnglesHint: {x: -180, y: -52.048004, z: -438.86798}
 --- !u!114 &7481670875787795531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12748,7 +12780,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rocketForce: 50
-  launchDuration: 15
   accelerationTime: 2
   handTransform: {fileID: 3521383577187963670}
   aimDirectionReference: {fileID: 4947068933509714842}
@@ -13130,7 +13161,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!120 &8319920623567525357
 LineRenderer:
   serializedVersion: 2
@@ -13982,7 +14013,10 @@ MonoBehaviour:
   leftHandPrefab: {fileID: 8228326461117986280}
   spawnPoint: {fileID: 9119791905695301467}
   realHand: {fileID: 9116571917352450297}
-  handLifetime: 10
+  handLifetime: 24.69
+  mainBody: {fileID: 9116469990956276617}
+  vrCamera: {fileID: 3654566149816807428}
+  cameraOriginalParent: {fileID: 4978941816468074650}
 --- !u!4 &8898694022130379347
 Transform:
   m_ObjectHideFlags: 0

@@ -16,6 +16,16 @@ public class LeftHandSpawner : MonoBehaviour
     [Header("Hand Life Time")]
     public float handLifetime = 5f;  // Time before the hand is automatically destroyed
 
+    [Header("XR Rig")]
+    //public Transform xrRig; // Assign your XR Rig or XR Origin here
+    //public float followSpeed = 1f; // Smoothing factor
+    public GameObject mainBody;
+    //private Vector3 originalLocation;
+    [Header("Camera Settings")]
+    public Camera vrCamera;
+    public Transform cameraOriginalParent;  // Set this manually to XR rig or camera offset parent
+    private Transform handCameraMount;      // Will be found on the spawned hand
+
     private GameObject spawnedLeftHand;
     private bool hasSpawned = false;
     private float spawnTimer = 0f;
@@ -50,10 +60,17 @@ public class LeftHandSpawner : MonoBehaviour
     }
     void LateUpdate()
     {
-        if(hasSpawned){
+        if (hasSpawned)
+        {
+            // Move real hand out of view (your current code)
             realHand.transform.position = Vector3.zero;
+
+            // Smoothly move XR rig toward the spawned hand
+            vrCamera.transform.position = Vector3.Lerp(vrCamera.transform.position, handCameraMount.position, Time.deltaTime * 10f);
+            vrCamera.transform.rotation = Quaternion.Slerp(vrCamera.transform.rotation, handCameraMount.rotation, Time.deltaTime * 10f);
         }
     }
+
 
     private void TrySpawnLeftHand()
     {
@@ -64,8 +81,18 @@ public class LeftHandSpawner : MonoBehaviour
         spawnedLeftHand = Instantiate(leftHandPrefab, spawnLocation.position, spawnLocation.rotation);
         spawnedLeftHand.SetActive(true);
 
+        // Try to find a child object named "CameraMount" on the hand
+        handCameraMount = spawnedLeftHand.transform.Find("CameraMount");
+        if (handCameraMount != null && vrCamera != null)
+        {
+            vrCamera.transform.SetParent(handCameraMount);
+            vrCamera.transform.localPosition = Vector3.zero;
+            vrCamera.transform.localRotation = Quaternion.identity;
+        }
+        mainBody.SetActive(false);
+
         hasSpawned = true;
-        spawnTimer = 0f;  // Reset the timer when the hand is spawned
+        spawnTimer = 0f;
     }
 
     private void DestroyHand()
@@ -79,9 +106,18 @@ public class LeftHandSpawner : MonoBehaviour
 
     public void ClearSpawnedHand()
     {
+        if (vrCamera != null && cameraOriginalParent != null)
+        {
+            vrCamera.transform.SetParent(cameraOriginalParent);
+            vrCamera.transform.localPosition = Vector3.zero;
+            vrCamera.transform.localRotation = Quaternion.identity;
+        }
+        mainBody.SetActive(true);
+
         realHand.SetActive(true);
         spawnedLeftHand = null;
         hasSpawned = false;
-        spawnTimer = 0f; // Reset the timer when the hand is cleared
+        spawnTimer = 0f;
     }
+
 }

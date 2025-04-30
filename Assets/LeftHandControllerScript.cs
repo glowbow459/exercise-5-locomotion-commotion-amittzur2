@@ -6,7 +6,6 @@ public class LeftHandControllerScript : MonoBehaviour
 {
     [Header("Rocket Hand Settings")]
     public float rocketForce = 50f;
-    public float launchDuration = 15f;
     public float accelerationTime = 2f; // Time to reach full speed
 
     private Rigidbody rb;
