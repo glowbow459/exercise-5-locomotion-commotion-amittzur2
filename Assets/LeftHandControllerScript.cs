@@ -15,11 +15,16 @@ public class LeftHandControllerScript : MonoBehaviour
     public Transform handTransform;
     public Transform aimDirectionReference;
     public float rotationSmoothSpeed = 5f;
+    public float rotationSensitivity = 0.01f;
     
     private Vector3 baseForward;
+    private Quaternion previousAimRotation;
+    private float accumulatedYaw = 0f;
 
     void Start()
     {
+        if (aimDirectionReference != null)
+            previousAimRotation = aimDirectionReference.rotation;
         baseForward = GetLaunchDirection();
         rb = GetComponent<Rigidbody>();
         if (rb == null)
@@ -32,38 +37,54 @@ public class LeftHandControllerScript : MonoBehaviour
         Debug.Log("Rocket hand launched!");
     }
 
-    void Update()
+void Update()
+{
+    elapsedTime += Time.deltaTime;
+
+    // Calculate acceleration
+    float accelerationFactor = Mathf.Clamp01(elapsedTime / accelerationTime);
+    float currentSpeed = rocketForce * accelerationFactor;
+
+    // Get launch direction (based on current yaw)
+    Vector3 launchDirection = Quaternion.Euler(0, accumulatedYaw, 0) * Vector3.forward;
+    Debug.Log("Yaw: " + accumulatedYaw);
+    rb.velocity = launchDirection * currentSpeed;
+
+    // Update yaw based on real hand rotation delta
+    if (aimDirectionReference != null)
     {
-        elapsedTime += Time.deltaTime;
+        Quaternion currentRotation = aimDirectionReference.rotation;
 
-        // Calculate acceleration factor (0 to 1)
-        float accelerationFactor = Mathf.Clamp01(elapsedTime / accelerationTime);
+        // Get delta rotation between frames
+        Quaternion delta = currentRotation * Quaternion.Inverse(previousAimRotation);
+        //previousAimRotation = currentRotation;
 
-        Vector3 launchDirection = GetLaunchDirection();
-        float currentSpeed = rocketForce * accelerationFactor;
+        // Convert delta rotation to yaw angle
+        delta.ToAngleAxis(out float angle, out Vector3 axis);
+        if (Vector3.Dot(axis, Vector3.up) < 0) angle = -angle; // Ensure correct direction
+        float yawChange = angle;
 
-        rb.velocity = launchDirection * currentSpeed;
+        // Optional: sensitivity factor
+        yawChange *= rotationSensitivity; // reduce sensitivity
 
-        // Smoothly rotate the hand toward the launch direction
-        // New: Rotational deviation spin
-        if (handTransform != null && aimDirectionReference != null)
-        {
-            // Step 1: Define the base forward (could be world forward or some locked direction)
-
-            // Step 2: Get the deviation from the real hand
-            Vector3 currentDirection = GetLaunchDirection();
-
-            // Calculate signed angle difference around a reference axis (usually up)
-            float angleOffset = Vector3.SignedAngle(baseForward, currentDirection, Vector3.up);
-
-            // Use the angle offset to create a spin direction
-            float spinSpeed = angleOffset * rotationSmoothSpeed;
-
-            // Apply rotation continuously around up axis
-            handTransform.Rotate(Vector3.up, spinSpeed * Time.deltaTime, Space.World);
-            }
-
+        accumulatedYaw += yawChange;
+        if(accumulatedYaw < 0.1){
+            accumulatedYaw = 0;
+        }
     }
+
+    // Rotate rocket hand to face the new direction
+    if (handTransform != null)
+    {
+        Quaternion targetRotation = Quaternion.LookRotation(launchDirection, Vector3.up);
+        handTransform.rotation = Quaternion.Slerp(
+            handTransform.rotation,
+            targetRotation,
+            rotationSmoothSpeed * Time.deltaTime
+        );
+    }
+}
+
 
     Vector3 GetLaunchDirection()
     {
