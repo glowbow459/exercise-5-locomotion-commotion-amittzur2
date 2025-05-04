@@ -49,7 +49,7 @@ void Update()
     float accelerationFactor = Mathf.Clamp01(elapsedTime / accelerationTime);
     float currentSpeed = rocketForce * accelerationFactor;
     // Get launch direction (based on current yaw)
-    Vector3 launchDirection = Quaternion.Euler(accumulatedPitch, accumulatedYaw, 0) * Vector3.forward;
+    Vector3 launchDirection = Quaternion.Euler(accumulatedPitch, accumulatedYaw, 0) * baseForward;
 
     Debug.Log("Yaw: " + accumulatedYaw);
     rb.velocity = launchDirection * currentSpeed;
