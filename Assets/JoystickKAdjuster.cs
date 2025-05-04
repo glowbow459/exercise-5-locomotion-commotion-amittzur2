@@ -78,36 +78,21 @@ public class JoystickKAdjuster : MonoBehaviour
             }
 
         }
-        Vector3 realHandPositionTwo = controller.GetControlerPosition(); // This is the original tracked position
+        // Vector3 realHandPositionTwo = controller.GetControlerPosition(); // This is the original tracked position
 
-        // 2. Get the virtual/extended hand position (the current position of this GameObject)
-        Vector3 virtualHandPosition = handTransform.position;
+        // // 2. Get the virtual/extended hand position (the current position of this GameObject)
+        // Vector3 virtualHandPosition = handTransform.position;
 
-        // 3. Direction and distance from real to virtual hand
-        Vector3 direction = virtualHandPosition - realHandPositionTwo;
-        float distance = direction.magnitude;
+        // // 3. Direction and distance from real to virtual hand
+        // Vector3 direction = virtualHandPosition - realHandPositionTwo;
+        // float distance = direction.magnitude;
 
-        // 4. Raycast
-        if (Physics.Raycast(realHandPositionTwo, direction.normalized, out RaycastHit hit, distance))
-        {
-            Debug.Log("Collider detected between real and virtual hand: " + hit.collider.name);
-            controller.k = 0;
-            // Optionally, do something like stop arm extension or give haptic feedback
-        }
-    }
-    void SendRayToHand()
-    {
-        Vector3 origin = offset.position;
-        Vector3 direction = (handTransform.position - origin).normalized;
-        Debug.DrawRay(origin, direction * Vector3.Distance(origin, handTransform.position), Color.red);
-        //Debug.Log("spot origin: " + origin);
-        // Raycast from controller to hand
-        if (Physics.Raycast(origin, direction, out RaycastHit hit, Vector3.Distance(origin, handTransform.position)))
-        {
-            Debug.Log("Ray hit: " + hit.collider.name);
-        }
-
-        // Debug visualization (visible in Scene View)
-        //Debug.DrawRay(origin, direction * Vector3.Distance(origin, handTransform.position), Color.red);
+        // // 4. Raycast
+        // if (Physics.Raycast(realHandPositionTwo, direction.normalized, out RaycastHit hit, distance))
+        // {
+        //     Debug.Log("Collider detected between real and virtual hand: " + hit.collider.name);
+        //     controller.k = 0;
+        //     // Optionally, do something like stop arm extension or give haptic feedback
+        // }
     }
 }

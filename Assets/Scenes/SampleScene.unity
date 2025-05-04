@@ -12884,12 +12884,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1386b0e5f91b404ba770845305e9803, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rocketForce: 7
+  rocketForce: 15.69
   accelerationTime: 2
   handTransform: {fileID: 3521383577187963670}
   aimDirectionReference: {fileID: 4947068933509714842}
   rotationSmoothSpeed: 29.68
   rotationSensitivity: 0.03
+  yawDeadZone: 20
+  pitchDeadZone: 20
 --- !u!1 &7780382826820747717
 GameObject:
   m_ObjectHideFlags: 0
