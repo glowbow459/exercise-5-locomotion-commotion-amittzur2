@@ -16,10 +16,14 @@ public class LeftHandControllerScript : MonoBehaviour
     public Transform aimDirectionReference;
     public float rotationSmoothSpeed = 5f;
     public float rotationSensitivity = 0.01f;
+    public float yawDeadZone = 2f;
+    public float pitchDeadZone = 2f; // degrees
     
     private Vector3 baseForward;
     private Quaternion previousAimRotation;
     private float accumulatedYaw = 0f;
+    private float accumulatedPitch = 0f;
+    
 
     void Start()
     {
@@ -44,33 +48,43 @@ void Update()
     // Calculate acceleration
     float accelerationFactor = Mathf.Clamp01(elapsedTime / accelerationTime);
     float currentSpeed = rocketForce * accelerationFactor;
-
     // Get launch direction (based on current yaw)
-    Vector3 launchDirection = Quaternion.Euler(0, accumulatedYaw, 0) * Vector3.forward;
+    Vector3 launchDirection = Quaternion.Euler(accumulatedPitch, accumulatedYaw, 0) * Vector3.forward;
+
     Debug.Log("Yaw: " + accumulatedYaw);
     rb.velocity = launchDirection * currentSpeed;
 
     // Update yaw based on real hand rotation delta
     if (aimDirectionReference != null)
     {
+        // Save current rotation
         Quaternion currentRotation = aimDirectionReference.rotation;
 
-        // Get delta rotation between frames
+        // Get delta rotation
         Quaternion delta = currentRotation * Quaternion.Inverse(previousAimRotation);
-        //previousAimRotation = currentRotation;
 
-        // Convert delta rotation to yaw angle
-        delta.ToAngleAxis(out float angle, out Vector3 axis);
-        if (Vector3.Dot(axis, Vector3.up) < 0) angle = -angle; // Ensure correct direction
-        float yawChange = angle;
+        // Convert delta to local Euler angles
+        Vector3 deltaEuler = delta.eulerAngles;
 
-        // Optional: sensitivity factor
-        yawChange *= rotationSensitivity; // reduce sensitivity
+        // Normalize to [-180, 180]
+        deltaEuler.x = Mathf.DeltaAngle(0, deltaEuler.x);
+        deltaEuler.y = Mathf.DeltaAngle(0, deltaEuler.y);
 
+        // Apply dead zone and sensitivity to yaw
+        float yawChange = Mathf.Abs(deltaEuler.y) < yawDeadZone ? 0f :
+            (deltaEuler.y > 0 ? deltaEuler.y - yawDeadZone : deltaEuler.y + yawDeadZone);
+        yawChange *= rotationSensitivity;
         accumulatedYaw += yawChange;
-        if(accumulatedYaw < 0.1){
-            accumulatedYaw = 0;
-        }
+
+        // Apply dead zone and sensitivity to pitch
+        float pitchChange = Mathf.Abs(deltaEuler.x) < pitchDeadZone ? 0f :
+            (deltaEuler.x > 0 ? deltaEuler.x - pitchDeadZone : deltaEuler.x + pitchDeadZone);
+        pitchChange *= rotationSensitivity;
+        accumulatedPitch += pitchChange;
+
+        // Clamp pitch if you want to avoid going vertical/upside down:
+        accumulatedPitch = Mathf.Clamp(accumulatedPitch, -60f, 60f);
+
     }
 
     // Rotate rocket hand to face the new direction

@@ -12884,11 +12884,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1386b0e5f91b404ba770845305e9803, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rocketForce: 50
+  rocketForce: 7
   accelerationTime: 2
   handTransform: {fileID: 3521383577187963670}
   aimDirectionReference: {fileID: 4947068933509714842}
   rotationSmoothSpeed: 29.68
+  rotationSensitivity: 0.03
 --- !u!1 &7780382826820747717
 GameObject:
   m_ObjectHideFlags: 0
@@ -14118,7 +14119,7 @@ MonoBehaviour:
   leftHandPrefab: {fileID: 8228326461117986280}
   spawnPoint: {fileID: 9119791905695301467}
   realHand: {fileID: 9116571917352450297}
-  handLifetime: 24.69
+  handLifetime: 87.6
   mainBody: {fileID: 9116469990956276617}
   vrCamera: {fileID: 3654566149816807428}
   cameraOriginalParent: {fileID: 4978941816468074650}
