@@ -51,7 +51,7 @@ void Update()
     // Get launch direction (based on current yaw)
     Vector3 launchDirection = Quaternion.Euler(accumulatedPitch, accumulatedYaw, 0) * baseForward;
 
-    Debug.Log("Yaw: " + accumulatedYaw);
+    //Debug.Log("Yaw: " + accumulatedYaw);
     rb.velocity = launchDirection * currentSpeed;
 
     // Update yaw based on real hand rotation delta
